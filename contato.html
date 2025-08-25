@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contato - IPTV Premium</title>
+<style>
+body {margin:0;font-family:'Arial',sans-serif;background:#121212;color:#fff;overflow-x:hidden;}
+.menu-btn{position:fixed;top:20px;left:20px;width:55px;height:55px;border-radius:50%;border:none;background:linear-gradient(135deg,#00ff84,#00bfff);color:#121212;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1001;transition:all 0.3s ease;}
+.menu-btn:hover{transform:scale(1.1);box-shadow:0 0 15px rgba(0,255,132,0.7);}
+.sidebar{position:fixed;top:0;left:-280px;width:280px;height:100%;background:#1c1c1c;padding-top:100px;box-shadow:2px 0 12px rgba(0,0,0,.8);z-index:1000;transition:left 0.5s cubic-bezier(0.77,0,0.175,1);display:flex;flex-direction:column;}
+.sidebar.active{left:0;}
+.sidebar a{padding:15px 25px;text-decoration:none;color:#fff;font-size:16px;border-left:4px solid transparent;transition:all 0.3s ease;position:relative;overflow:hidden;}
+.sidebar a:hover{color:#121212;background:linear-gradient(90deg,#00ff84,#00bfff);border-left:4px solid #00ff84;box-shadow:0 0 10px rgba(0,255,132,0.5);}
+.content{transition:margin-left 0.5s cubic-bezier(0.77,0,0.175,1);padding:50px 20px 20px 20px;margin-left:0;text-align:center;}
+.content.shift{margin-left:280px;}
+.card-container{display:flex;justify-content:center;gap:25px;flex-wrap:wrap;}
+.card{background:#2f2f2f;color:#f5f5f5;width:100%;max-width:400px;border-radius:15px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.5);border:3px solid #444;display:flex;flex-direction:column;transition:transform 0.3s ease,box-shadow 0.3s ease;}
+.card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,255,132,0.7);}
+.card-header{background:#1a1a1a;color:#f5f5f5;text-align:center;padding:20px 15px;position:relative;font-size:22px;}
+.card-body{padding:20px;font-size:16px;}
+.contact-item{display:flex;align-items:center;gap:15px;padding:12px 0;border-bottom:1px solid #333;}
+.contact-item:last-child{border-bottom:none;}
+.contact-item i{font-size:20px;color:#00ff84;width:30px;text-align:center;}
+@media (max-width:600px){.sidebar{width:220px;padding-top:80px;}.content.shift{margin-left:220px;}.menu-btn{width:50px;height:50px;font-size:24px;}.card{max-width:90%;}.card-header{font-size:20px;}}
+</style>
+<!-- Link para ícones Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<button class="menu-btn">☰</button>
+
+<div class="sidebar" id="sidebar">
+  <a href="index.html">🏠 Início</a>
+  <div class="has-submenu">
+    <a href="#">💎 Planos</a>
+    <div class="submenu">
+      <a href="mensal.html">Mensal</a>
+      <a href="anual.html">Anual</a>
+      <a href="premium.html">Premium</a>
+    </div>
+  </div>
+  <a href="sobre.html">ℹ️ Sobre Nós</a>
+  <a href="contato.html">✉️ Contato</a>
+  <a href="suporte.html">🛠 Suporte</a>
+</div>
+
+<div class="content">
+  <div class="card-container">
+    <div class="card">
+      <div class="card-header">Fale Conosco</div>
+      <div class="card-body">
+        <div class="contact-item"><i class="fas fa-phone"></i> <span>+55 11 91234-5678</span></div>
+        <div class="contact-item"><i class="fas fa-envelope"></i> <span>contato@iptvpremium.com</span></div>
+        <div class="contact-item"><i class="fab fa-whatsapp"></i> <span>+55 11 91234-5678</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Toggle sidebar
+const menuBtn = document.querySelector('.menu-btn');
+const sidebar = document.getElementById('sidebar');
+const content = document.querySelector('.content');
+menuBtn.addEventListener('click',()=>{
+  sidebar.classList.toggle('active');
+  content.classList.toggle('shift');
+  menuBtn.textContent=sidebar.classList.contains('active')?'×':'☰';
+});
+document.querySelectorAll('.has-submenu>a').forEach(item=>{
+  item.addEventListener('click',e=>{
+    e.preventDefault();
+    const parent=item.parentElement;
+    const submenu=parent.querySelector('.submenu');
+    parent.classList.toggle('active');
+    submenu.style.maxHeight=parent.classList.contains('active')?submenu.scrollHeight+"px":"0";
+  });
+});
+document.addEventListener('click',e=>{
+  if(!sidebar.contains(e.target)&&!menuBtn.contains(e.target)){
+    sidebar.classList.remove('active');
+    content.classList.remove('shift');
+    menuBtn.textContent='☰';
+    document.querySelectorAll('.has-submenu').forEach(parent=>{
+      parent.classList.remove('active');
+      parent.querySelector('.submenu').style.maxHeight="0";
+    });
+  }
+});
+</script>
+
+</body>
+</html>
